@@ -1,3 +1,4 @@
+print("### [UliGem] Loading nodes...")
 from .Gemini_Config import GeminiConfig
 from .Gemini_Generator import GeminiGenerator
 from .Gemini_Interrogator import GeminiInterrogator

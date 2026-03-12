@@ -114,10 +114,20 @@ class GeminiNanoBanana:
             error_msg = str(e)
             print(f"[UliGem] API Error: {error_msg}")
             
+            # Attempt to extract detailed reason from the SDK exception
+            detailed_info = ""
             if "429" in error_msg:
-                return (fallback_image, "Error 429: Rate Limit Exceeded (Free Tier). Wait a minute and try again.")
+                if "limit: 0" in error_msg:
+                    detailed_info = " (Note: Your quota limit is 0. Image generation might be restricted in your region/tier for this model.)"
+                elif "retry in" in error_msg:
+                    import re
+                    match = re.search(r"retry in ([\d\.]+s)", error_msg)
+                    if match:
+                        detailed_info = f" (Retry in {match.group(1)})"
+                return (fallback_image, f"Error 429: Rate Limit/Quota Exceeded{detailed_info}. Check Google AI Studio billing/plan.")
+            
             elif "400" in error_msg:
-                return (fallback_image, f"Error 400: Bad Request. Model '{model_name}' likely does NOT support image generation. Use 'gemini-2.5-flash-image'.")
+                return (fallback_image, f"Error 400: Bad Request. Model '{model_name}' likely does NOT support native image generation. Use 'gemini-2.5-flash-image'.")
             
             return (fallback_image, f"Error: {error_msg}")
 

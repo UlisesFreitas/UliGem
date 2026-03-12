@@ -1,6 +1,6 @@
 {
-  "last_node_id": 6,
-  "last_link_id": 5,
+  "last_node_id": 5,
+  "last_link_id": 4,
   "nodes": [
     {
       "id": 1,
@@ -8,26 +8,35 @@
       "pos": [100, 100],
       "size": [330, 220],
       "properties": { "Node name for S&R": "Gemini_Config" },
-      "widgets_values": ["gemini-2.5-flash-image", 1.0, 0.95, 40, 2048]
+      "widgets_values": ["gemini-2.5-flash-image", 1.0, 0.95, 40, 2048],
+      "outputs": [
+        { "name": "config", "type": "GEMINI_CONFIG", "links": [1] }
+      ]
     },
     {
-      "id": 4,
+      "id": 2,
       "type": "Gemini_Positive_Prompt",
       "pos": [100, 350],
       "size": [330, 200],
       "properties": { "Node name for S&R": "Gemini_Positive_Prompt" },
-      "widgets_values": ["A high-quality digital painting of a futuristic city"]
+      "widgets_values": ["A high-quality digital painting of a futuristic city"],
+      "outputs": [
+        { "name": "prompt", "type": "STRING", "links": [2] }
+      ]
     },
     {
-      "id": 5,
+      "id": 3,
       "type": "Gemini_Negative_Prompt",
       "pos": [100, 600],
       "size": [330, 200],
       "properties": { "Node name for S&R": "Gemini_Negative_Prompt" },
-      "widgets_values": ["blurry, background, lightning, distorted, low quality, text, watermark"]
+      "widgets_values": ["blurry, background, lightning, distorted, low quality, text, watermark"],
+      "outputs": [
+        { "name": "prompt", "type": "STRING", "links": [3] }
+      ]
     },
     {
-      "id": 2,
+      "id": 4,
       "type": "Gemini_Nano_Banana",
       "pos": [500, 100],
       "size": [400, 400],
@@ -40,23 +49,34 @@
       ],
       "inputs": [
         { "name": "config", "type": "GEMINI_CONFIG", "link": 1 },
-        { "name": "positive_prompt", "type": "STRING", "link": 4, "widget": { "name": "positive_prompt" } },
-        { "name": "negative_prompt", "type": "STRING", "link": 5, "widget": { "name": "negative_prompt" } }
+        { "name": "positive_prompt", "type": "STRING", "link": 2 },
+        { "name": "negative_prompt", "type": "STRING", "link": 3 }
+      ],
+      "outputs": [
+        { "name": "image", "type": "IMAGE", "links": [4] },
+        { "name": "status", "type": "STRING", "links": null }
       ]
     },
     {
-      "id": 3,
+      "id": 5,
       "type": "SaveImage",
       "pos": [950, 100],
-      "size": [270, 58],
+      "size": [270, 220],
       "properties": { "Node name for S&R": "SaveImage" },
-      "widgets_values": ["Gemini_Output"]
+      "widgets_values": ["Gemini_Output"],
+      "inputs": [
+        { "name": "images", "type": "IMAGE", "link": 4 }
+      ]
     }
   ],
   "links": [
-    [1, 1, 0, 2, 0, "GEMINI_CONFIG"],
-    [3, 2, 0, 3, 0, "IMAGE"],
-    [4, 4, 0, 2, 1, "STRING"],
-    [5, 5, 0, 2, 2, "STRING"]
-  ]
+    [1, 1, 0, 4, 0, "GEMINI_CONFIG"],
+    [2, 2, 0, 4, 1, "STRING"],
+    [3, 3, 0, 4, 2, "STRING"],
+    [4, 4, 0, 5, 0, "IMAGE"]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {},
+  "version": 0.4
 }

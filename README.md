@@ -85,9 +85,13 @@ UliGem integrates directly with the ComfyUI Settings menu for a secure and clean
 
 ### ⚠️ Common API Errors
 
-- **Error 429 (Rate Limit Exceeded)**: 
+- **Error 429 (Rate Limit Exceeded / Quota Exceeded)**: 
   - **Cause**: You are using a Free Tier API key and have exceeded the requests-per-minute limit.
-  - **Solution**: Wait 1 minute and try again. Consider upgrading to a Pay-as-you-go plan in Google AI Studio for higher limits.
+  - **Special Case ("limit: 0")**: If the log shows `limit: 0`, your account or region is currently restricted from using **Image Generation** on the Free Tier.
+  - **Solution**: 
+    1. Check if you can generate images directly in [Google AI Studio](https://aistudio.google.com/).
+    2. Try the **Pay-as-you-go** tier (it has a generous free allowance but higher priority).
+    3. Verify that the **Interrogator** node works—if it does, your API key is valid, but strictly for Text/Vision tasks.
 
 - **Error 400 (Bad Request)**:
   - **Cause**: You selected a model that does not support native image generation (like `gemini-2.0-flash`).

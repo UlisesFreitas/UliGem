@@ -8,6 +8,9 @@ app.registerExtension({
 			name: "UliGem: Google Gemini API Key",
 			type: "text",
 			defaultValue: "",
+			attrs: {
+				type: "password"
+			}
 		});
 
 		app.ui.settings.addSetting({
