@@ -1,0 +1,81 @@
+{
+  "2": {
+    "inputs": {
+      "image": "00000-Sprite-0001 (1).png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "3": {
+    "inputs": {
+      "positive_prompt": [
+        "5",
+        0
+      ],
+      "negative_prompt": [
+        "6",
+        0
+      ],
+      "instructions": "You are a lowpoly expert artist, output a detailed lowpoly image. Focus on cinematic lighting and sharp details.",
+      "aspect_ratio": "1:1",
+      "config": [
+        "8",
+        0
+      ],
+      "image": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "Gemini_Nano_Banana",
+    "_meta": {
+      "title": "UliGem Nano Banana (Image Gen)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "filename_prefix": "Gemini_Output",
+      "images": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "5": {
+    "inputs": {
+      "text": "Transform this into a cyberpunkcharacter with futuristic clothes, and lowpoly style."
+    },
+    "class_type": "Gemini_Positive_Prompt",
+    "_meta": {
+      "title": "UliGem Positive Prompt"
+    }
+  },
+  "6": {
+    "inputs": {
+      "text": "blurry, background, lightning, distorted, text, watermark, high quality"
+    },
+    "class_type": "Gemini_Negative_Prompt",
+    "_meta": {
+      "title": "UliGem Negative Prompt"
+    }
+  },
+  "8": {
+    "inputs": {
+      "model_name": "gemini-2.5-flash-image",
+      "temperature": 1,
+      "top_p": 0.95,
+      "top_k": 40,
+      "max_output_tokens": 2048
+    },
+    "class_type": "Gemini_Config",
+    "_meta": {
+      "title": "UliGem Configuration"
+    }
+  }
+}
