@@ -14,18 +14,40 @@ UliGem is a powerful suite of custom nodes for ComfyUI that integrates **Google 
 
 ## 🚀 Installation
 
-1. **Clone the repository**:
-   Navigate to your ComfyUI `custom_nodes` directory and run:
+### Option 1: ComfyUI Portable (Windows)
+If you are using the portable version of ComfyUI, your folder structure should look like this:
+```text
+ComfyUI_windows_portable/
+├── ComfyUI/
+│   └── custom_nodes/
+│       └── UliGem/  <-- You are here
+├── python_embeded/
+├── update/
+└── run_nvidia_gpu.bat
+```
+
+1. Open a terminal (CMD or PowerShell) in the `ComfyUI\custom_nodes\UliGem` directory.
+2. Run the following command:
    ```bash
-   git clone https://github.com/UlisesFreitas/UliGem.git
+   ..\..\..\python_embeded\python.exe -m pip install -r requirements.txt
    ```
 
-2. **Install dependencies**:
-   Ensure you have the required Python packages installed:
+### Option 2: Standard ComfyUI / Manual Install
+If you installed ComfyUI manually or are using a virtual environment:
+
+1. Open a terminal in the `ComfyUI\custom_nodes\UliGem` directory.
+2. Run:
    ```bash
    pip install -r requirements.txt
    ```
-   *Required: `google-genai`, `pillow`, `torch`, `numpy`*
+
+### Quick Install Script (Windows Portable)
+You can create a file named `install.bat` inside the `UliGem` folder with this content and double-click it:
+```batch
+@echo off
+..\..\..\python_embeded\python.exe -m pip install -r requirements.txt
+pause
+```
 
 3. **Restart ComfyUI**.
 
