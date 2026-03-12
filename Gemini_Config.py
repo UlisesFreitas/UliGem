@@ -10,12 +10,12 @@ class GeminiConfig:
         return {
             "required": {
                 "model_name": ([
-                    "gemini-2.5-flash-image",
-                    "gemini-3.1-flash-image-preview",
-                    "gemini-2.0-flash",
-                    "gemini-2.5-pro",
-                    "gemini-1.5-flash", 
-                    "gemini-1.5-pro"
+                    "gemini-2.5-flash-image",        # [IMAGE GEN]
+                    "gemini-3.1-flash-image-preview",# [IMAGE GEN]
+                    "gemini-2.0-flash",              # [TEXT/VISION ONLY]
+                    "gemini-2.5-pro",                # [TEXT/VISION ONLY]
+                    "gemini-1.5-flash",              # [TEXT/VISION ONLY]
+                    "gemini-1.5-pro"                 # [TEXT/VISION ONLY]
                 ], {"default": "gemini-2.5-flash-image"}),
                 "temperature": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 2.0, "step": 0.1}),
                 "top_p": ("FLOAT", {"default": 0.95, "min": 0.0, "max": 1.0, "step": 0.01}),

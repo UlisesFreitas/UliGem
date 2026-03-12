@@ -48,6 +48,12 @@ class GeminiNanoBanana:
             # Initialize the new google-genai client
             client = genai.Client(api_key=api_key, http_options={'api_version': 'v1alpha'})
             
+            # List of models that support native image generation (IMAGE modality)
+            image_gen_models = ["gemini-2.5-flash-image", "gemini-3.1-flash-image-preview"]
+            
+            if model_name not in image_gen_models:
+                print(f"[UliGem] WARNING: Model '{model_name}' might not support native IMAGE modality. Using it may cause a 400 Bad Request.")
+            
             contents = []
             if image is not None:
                 # Convert ComfyUI image tensor to PIL Image
@@ -55,23 +61,17 @@ class GeminiNanoBanana:
                 pil_img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
                 contents.append(pil_img)
             
-            # Combine prompts for better understanding if native negative_prompt isn't supported or for reinforcement
-            # Gemini models often respond well to explicit instructions.
+            # Combine prompts for better understanding
             combined_prompt = f"[SYSTEM INSTRUCTIONS]: {instructions}\n\n[USER PROMPT]: {positive_prompt}\n\n[NEGATIVE INSTRUCTIONS]: Do NOT include: {negative_prompt}"
             contents.append(combined_prompt)
 
             # Generate content with IMAGE modality
-            # We try to pass negative_prompt in config if the model supports it natively
-            # but we also include it in the combined prompt for robustness.
             gen_config = types.GenerateContentConfig(
                 response_modalities=["IMAGE"],
                 temperature=config.get("temperature", 1.0),
                 top_p=config.get("top_p", 0.95),
                 top_k=config.get("top_k", 40),
             )
-            
-            # Some models in the new SDK support a native negative_prompt in the config
-            # We'll use a try-set approach or just rely on the combined prompt which is safer for Gemini 2.x
             
             response = client.models.generate_content(
                 model=model_name,
@@ -92,7 +92,7 @@ class GeminiNanoBanana:
                         generated_images.append(img_tensor)
 
             if not generated_images:
-                return (fallback_image, "Error: No image was generated in the response. Check API safety filters or model availability.")
+                return (fallback_image, "Error: No image was generated. The model might have filtered the content or is incompatible with image modality.")
 
             # Custom output saving
             output_dir = folder_paths.get_output_directory()
@@ -104,15 +104,22 @@ class GeminiNanoBanana:
             filename = f"UliGem_{timestamp}.png"
             filepath = os.path.join(uligem_output_dir, filename)
             
-            # Save the first image to the custom folder
-            first_img_pil = Image.open(io.BytesIO(response.candidates[0].content.parts[0].inline_data.data)).convert("RGB")
+            # Save the first image
+            first_img_pil = Image.fromarray((generated_images[0][0].numpy() * 255).astype(np.uint8))
             first_img_pil.save(filepath)
 
-            # Return the first image
             return (generated_images[0], f"Success: Saved to {filepath}")
 
         except Exception as e:
-            return (fallback_image, f"Error during google-genai generation: {str(e)}")
+            error_msg = str(e)
+            print(f"[UliGem] API Error: {error_msg}")
+            
+            if "429" in error_msg:
+                return (fallback_image, "Error 429: Rate Limit Exceeded (Free Tier). Wait a minute and try again.")
+            elif "400" in error_msg:
+                return (fallback_image, f"Error 400: Bad Request. Model '{model_name}' likely does NOT support image generation. Use 'gemini-2.5-flash-image'.")
+            
+            return (fallback_image, f"Error: {error_msg}")
 
 NODE_CLASS_MAPPINGS = {
     "Gemini_Nano_Banana": GeminiNanoBanana

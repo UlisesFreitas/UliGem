@@ -81,6 +81,22 @@ UliGem integrates directly with the ComfyUI Settings menu for a secure and clean
 - **UliGem Negative Prompt**: Multi-line text area for negative constraints.
 - **UliGem Text Generator**: General-purpose LLM generation for prompt expansion or creative writing.
 
+## 🛠️ Troubleshooting
+
+### ⚠️ Common API Errors
+
+- **Error 429 (Rate Limit Exceeded)**: 
+  - **Cause**: You are using a Free Tier API key and have exceeded the requests-per-minute limit.
+  - **Solution**: Wait 1 minute and try again. Consider upgrading to a Pay-as-you-go plan in Google AI Studio for higher limits.
+
+- **Error 400 (Bad Request)**:
+  - **Cause**: You selected a model that does not support native image generation (like `gemini-2.0-flash`).
+  - **Solution**: Use `gemini-2.5-flash-image` or `gemini-3.1-flash-image-preview` for the **Nano Banana** node. Other models are for text/vision tasks only.
+
+- **Black Image / No Output**:
+  - **Cause**: The API safety filters might have blocked the content, or there was a temporary server failure.
+  - **Solution**: Check the ComfyUI console for detailed error messages. Try a different prompt.
+
 ## 📂 Output Folder
 
 Generated images are saved in:
