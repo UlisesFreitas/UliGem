@@ -39,16 +39,14 @@
         0.95,
         40,
         2048
-      ],
-      "color": "#323",
-      "bgcolor": "#535"
+      ]
     },
     {
       "id": 2,
       "type": "Gemini_Positive_Prompt",
       "pos": [
         122.00001227522705,
-        432.60712090462056
+        422.00004455452745
       ],
       "size": [
         396,
@@ -73,10 +71,8 @@
         "Node name for S&R": "Gemini_Positive_Prompt"
       },
       "widgets_values": [
-        "Un personaje paladin de fantasía, con cuerpo videojuego, en T-Pose , vista al frente, con los brazos extendidos y las palmas hacia abajo.\nArmadura ligera bien definida y detallada para separarse en 3D.\nEstilo 3D render  low-poly.\nTécnica: Con flat shading donde cada polígono es visible, aristas pronunciadas. \nGeometría: Aristas marcadas, bordes duros, colores sólidos mate y planos. \nSin suavizado de superficies.\nSin sombras en el fondo.\nSin espada, ni escudo, ni casco.\nElige pelo (Rubio, marrón, negro, rojo)\nFondo blanco limpio.  "
-      ],
-      "color": "#232",
-      "bgcolor": "#353"
+        "A high-quality digital painting of a futuristic city"
+      ]
     },
     {
       "id": 3,
@@ -109,9 +105,7 @@
       },
       "widgets_values": [
         "blurry, background, lightning, distorted, low quality, text, watermark"
-      ],
-      "color": "#322",
-      "bgcolor": "#533"
+      ]
     },
     {
       "id": 4,
@@ -214,9 +208,7 @@
       },
       "widgets_values": [
         "Gemini_Output"
-      ],
-      "color": "#233",
-      "bgcolor": "#355"
+      ]
     },
     {
       "id": 6,
@@ -245,9 +237,7 @@
         "ver": "0.16.4",
         "Node name for S&R": "PreviewImage"
       },
-      "widgets_values": [],
-      "color": "#223",
-      "bgcolor": "#335"
+      "widgets_values": []
     },
     {
       "id": 7,
@@ -280,9 +270,7 @@
         null,
         null,
         true
-      ],
-      "color": "#2a363b",
-      "bgcolor": "#3f5159"
+      ]
     }
   ],
   "links": [
@@ -342,8 +330,8 @@
     "ds": {
       "scale": 0.7542134831460674,
       "offset": [
-        151.35567970204903,
-        161.79702048417118
+        319.74301675977676,
+        205.55121042830547
       ]
     },
     "frontendVersion": "1.39.19",

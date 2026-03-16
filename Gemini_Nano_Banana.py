@@ -57,8 +57,28 @@ class GeminiNanoBanana:
             contents = []
             if image is not None:
                 # Convert ComfyUI image tensor to PIL Image
+                # image shape: [B, H, W, C]
                 i = 255. * image[0].cpu().numpy()
                 pil_img = Image.fromarray(np.clip(i, 0, 255).astype(np.uint8))
+                
+                # FIX: Handle images with Alpha channel (transparency)
+                # Gemini image modality expects RGB. Transparency can result in black backgrounds.
+                if pil_img.mode in ('RGBA', 'LA') or (pil_img.mode == 'P' and 'transparency' in pil_img.info):
+                    print(f"[UliGem] Input image has transparency (mode: {pil_img.mode}). Compositing onto white background.")
+                    # Create a white background
+                    background = Image.new("RGB", pil_img.size, (255, 255, 255))
+                    # If it's palette mode with transparency, convert to RGBA first
+                    if pil_img.mode == 'P':
+                        pil_img = pil_img.convert("RGBA")
+                    # Paste the image onto the background using its alpha as a mask
+                    if 'A' in pil_img.getbands():
+                        background.paste(pil_img, mask=pil_img.split()[3])
+                    else:
+                        background.paste(pil_img)
+                    pil_img = background
+                else:
+                    pil_img = pil_img.convert("RGB")
+                
                 contents.append(pil_img)
             
             # Combine prompts for better understanding
